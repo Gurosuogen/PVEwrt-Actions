@@ -78,7 +78,7 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
-    - name: 🧬 UUpdate feeds
+    - name: 🧬 Update feeds
       run: cd openwrt && ./scripts/feeds update -a
 
     - name: 🪛 Install feeds
@@ -185,7 +185,7 @@ jobs:
         echo "📊 Build directory size:"
         du -sh /workdir/openwrt 2>/dev/null || echo "Unable to calculate"
 
-    - name: Upload bin directory
+    - name: 🪄 Upload bin directory
       uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
@@ -214,10 +214,36 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
-        touch release.txt
-        [ ${UPLOAD_GOFILE} = true && ${{ steps.gofile.outputs.url }} ] && echo "🔗 [GoFile](${{ steps.gofile.outputs.url }})" >> release.txt
+        FIRMWARE_NAME="PVEwrt"
+        BUILD_TIME=$(date +"%Y.%m.%d-%H%M")
+        RELEASE_TAG="${FIRMWARE_NAME}-${BUILD_TIME}"
+        echo "release_tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
+
+        # 生成 release 信息
+        cat > release.txt << EOF
+        ## 📦 OpenWrt Firmware Release
+
+        **🏷️ Release:** $RELEASE_TAG
+        **🌿 Branch:** $REPO_BRANCH
+        **📱 Device:** $(cat openwrt/DEVICE_NAME 2>/dev/null || echo 'N/A')
+        **📅 Build Date:** $(date +"%Y-%m-%d %H:%M:%S")
+        **🔨 Compiler:** GCC with ccache
+        
+        ## 📥 Download
+
+        Download the firmware files from the assets below.
+
+        ---
+
+        Built with ❤️ using [GitHub Actions](https://github.com/features/actions)
+        EOF
+
         echo "status=success" >> $GITHUB_OUTPUT
+        
+        # echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+        # touch release.txt
+        # [ ${UPLOAD_GOFILE} = true && ${{ steps.gofile.outputs.url }} ] && echo "🔗 [GoFile](${{ steps.gofile.outputs.url }})" >> release.txt
+        # echo "status=success" >> $GITHUB_OUTPUT
 
 
     - name: 📤 Upload firmware to release
