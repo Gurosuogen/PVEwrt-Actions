@@ -1,9 +1,0 @@
-config defaults
-        option input 'ACCEPT'
-        option output 'ACCEPT'
-        option forward 'ACCEPT'
-
-config include 'nikki'
-        option type 'script'
-        option path '/etc/nikki/scripts/firewall_include.sh'
-        option fw4_compatible '1'
