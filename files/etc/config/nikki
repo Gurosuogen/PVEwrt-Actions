@@ -48,7 +48,6 @@ config mixin 'mixin'
         option rule_provider '0'
         option mixin_file_content '0'
         option ui_path 'ui'
-        option api_secret '688671'
         option dns_proxy_server_nameserver_policy '0'
 
 config authentication
