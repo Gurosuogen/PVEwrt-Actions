@@ -19,4 +19,5 @@
 # Modify hostname
 #sed -i 's/OpenWrt/P3TERX-Router/g' package/base-files/files/bin/config_generate
 
-git clone https://github.com/svenshi/luci-app-oxidns package/luci-app-oxidns
+#git clone https://github.com/svenshi/luci-app-oxidns package/luci-app-oxidns
+git clone https://github.com/nikkinikki-org/OpenWrt-nikki ./package
