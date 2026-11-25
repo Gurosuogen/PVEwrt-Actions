@@ -1,0 +1,4 @@
+# add your custom package feeds here
+#
+# http://www.example.com/path/to/files/packages.adb
+https://nikkinikki.pages.dev/openwrt-25.12/x86_64/nikki/packages.adb
