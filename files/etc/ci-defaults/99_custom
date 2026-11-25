@@ -1,0 +1,8 @@
+uci set network.@device[0].ipv6='0'
+
+uci -q del network.lan.ip6assign
+uci set network.lan.delegate='0'
+
+uci commit network
+
+exit 0
